@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Chicago & West Northern System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Roboto+Condensed:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8a1d17">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#8a1d17">
+<meta name="theme-color" content="#8a1d17">
+</head>
+<body>
+<main class="brochure" role="main">
+
+  <!-- ===== MASTHEAD ===== -->
+  <header class="masthead">
+    <div class="rule-top"></div>
+    <div class="masthead-grid">
+      <div class="left">
+        General Offices
+      </div>
+      <div class="herald" aria-label="C&amp;WN herald">
+        <img src="/cwn_logo.png" alt="Chicago & West Northern System herald">
+      </div>
+      <div class="right">
+        400 W. Madison St.
+      </div>
+    </div>
+    <h1>The <em>Chicago &amp; West Northern</em> System</h1>
+    <div class="subtitle">Correspondence <span class="dot">◆</span> Inquiries <span class="dot">◆</span> Visit Requests</div>
+  </header>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="mainnav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/news.html">News</a></li>
+      <li><a href="/management.html">Management</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="section-head">
+    <div class="ornament">❦ ❦ ❦</div>
+    <h3>Open a Correspondence</h3>
+    <p class="dek">Direct your inquiry to the General Offices.</p>
+    <div class="rule"><span class="line"></span><span class="diamond">◆</span><span class="line"></span></div>
+  </div>
+
+  <div class="contact-wrap">
+    <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <!-- Honeypot field for basic spam protection -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit">Send Dispatch</button>
+      <div class="form-status" id="form-status"></div>
+    </form>
+  </div>
+
+  <div class="notice-box">
+    <div class="notice-box-kicker">A Note Regarding Correspondence</div>
+    <div class="notice-box-body">
+      Messages received at the General Offices are read by the President personally. Responses generally arrive within a few days. For instant gratification or quick exchanges, the road maintains accounts on the <a href="https://www.instagram.com/bunkerrailroad/" target="_blank" rel="noopener noreferrer">Instagram</a> and <a href="https://www.youtube.com/@bunkerrailroad" target="_blank" rel="noopener noreferrer">YouTube</a> wires under <strong>@bunkerrailroad</strong>.
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const form = e.target;
+      const status = document.getElementById('form-status');
+      const data = new FormData(form);
+      status.className = 'form-status';
+      status.textContent = '';
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if(response.ok){
+          status.className = 'form-status success';
+          status.textContent = 'Dispatch received. The General Offices will be in touch.';
+          form.reset();
+        } else {
+          status.className = 'form-status error';
+          status.textContent = 'There was a problem sending your message. Please try again, or reach out on Instagram.';
+        }
+      } catch(err){
+        status.className = 'form-status error';
+        status.textContent = 'Network error. Please try again later.';
+      }
+    });
+  </script>
+
+  <!-- ===== COLOPHON ===== -->
+  <footer class="colophon">
+    <div class="l">
+      General Offices · <em>400 West Madison St., Chicago</em><br>
+      R. D. Palmer, President
+    </div>
+    <div class="c">
+      <div class="mini"><img src="/cwn_logo.png" alt=""></div>
+      Printed in U.S.A.
+    </div>
+    <div class="r">
+      <em>The Fast Mail Route</em><br>
+      <a href="https://www.instagram.com/bunkerrailroad/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent">@bunkerrailroad</a> · Form 103
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

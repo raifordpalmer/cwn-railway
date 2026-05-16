@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "id": "001",
+      "date": "May 1955",
+      "date_iso": "1955-05-15",
+      "type": "bulletin",
+      "title": "Welcome to the System",
+      "excerpt": "An introduction to the Chicago & West Northern Railway System \u2014 what it is, what it isn't, and what the modeler intends to do with it.",
+      "image": "",
+      "body": "<p>Welcome to the General Offices of the Chicago &amp; West Northern Railway System. This is the first dispatch in what we intend will become a regular series of bulletins covering the construction and operation of the System, modeled in O scale (1:48) and set in the summer of 1955.</p><p>The C&amp;WN is a deliberate remix of the historical Chicago &amp; North Western Railway, not a road invented from whole cloth. We have taken the CNW's geography, locomotive roster, named trains, and operating philosophy as our point of departure, then exercised the modeler's prerogative to bend history where it suits the layout and the story we wish to tell.</p><p>Subscribe to the @bunkerrailroad accounts on Instagram and YouTube for the photographic record. Watch this space for written dispatches.</p>"
+    },
+    {
+      "id": "002",
+      "date": "May 1955",
+      "date_iso": "1955-05-10",
+      "type": "video",
+      "youtube_id": "",
+      "title": "Sample Video Post (Placeholder)",
+      "excerpt": "When you add a video post, fill in the youtube_id field with the ID from a YouTube URL (the part after v=).",
+      "body": "<p>This is a placeholder for a video post. To make it work, edit <code>posts.json</code> and replace the empty <code>youtube_id</code> with the video ID from a YouTube URL.</p><p>For example, if the YouTube URL is <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code>, the youtube_id would be <code>dQw4w9WgXcQ</code>.</p><p>The thumbnail will load automatically from YouTube, and the video will play embedded in the dispatch when a visitor clicks through.</p>"
+    }
+  ]
+}

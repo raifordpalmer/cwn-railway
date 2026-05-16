@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News — Chicago & West Northern System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Roboto+Condensed:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#8a1d17">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#8a1d17">
+<meta name="theme-color" content="#8a1d17">
+</head>
+<body>
+<main class="brochure" role="main">
+
+  <!-- ===== MASTHEAD ===== -->
+  <header class="masthead">
+    <div class="rule-top"></div>
+    <div class="masthead-grid">
+      <div class="left">
+        Dispatches
+      </div>
+      <div class="herald" aria-label="C&amp;WN herald">
+        <img src="/cwn_logo.png" alt="Chicago & West Northern System herald">
+      </div>
+      <div class="right">
+        Latest Issues
+      </div>
+    </div>
+    <h1>The <em>Chicago &amp; West Northern</em> System</h1>
+    <div class="subtitle">Construction Progress <span class="dot">◆</span> Operating Notes <span class="dot">◆</span> Bulletins</div>
+  </header>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="mainnav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/news.html" class="active">News</a></li>
+      <li><a href="/management.html">Management</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="section-head">
+    <div class="ornament">❦ ❦ ❦</div>
+    <h3>Dispatches from the Bunker</h3>
+    <p class="dek">News, construction progress, and reports from the General Offices.</p>
+    <div class="rule"><span class="line"></span><span class="diamond">◆</span><span class="line"></span></div>
+  </div>
+
+  <div class="news-grid" id="news-grid">
+    <!-- Posts inserted by JavaScript from posts.json -->
+    <div class="post-card" style="grid-column:1/-1;text-align:center;padding:40px;background:transparent;border:none;cursor:default" id="loading-msg">
+      <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--ink-soft)">Loading dispatches…</p>
+    </div>
+  </div>
+
+  <!-- Modal for full post view -->
+  <div class="post-overlay" id="post-overlay" onclick="if(event.target===this)closePost()">
+    <article class="post-modal" id="post-modal">
+      <button class="close-btn" onclick="closePost()" aria-label="Close">×</button>
+      <div class="post-hero" id="post-hero"></div>
+      <div class="post-content">
+        <div class="post-meta" id="post-meta"></div>
+        <h2 id="post-title"></h2>
+        <div class="post-body" id="post-body"></div>
+      </div>
+    </article>
+  </div>
+
+  <script>
+    let postsCache = [];
+    function escapeHtml(s){
+      const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+      return String(s).replace(/[&<>"']/g, c => map[c]);
+    }
+    function renderThumb(post){
+      if(post.type === 'video' && post.youtube_id){
+        return `<div class="thumb"><img src="https://img.youtube.com/vi/${escapeHtml(post.youtube_id)}/hqdefault.jpg" alt="${escapeHtml(post.title)}"></div>`;
+      }
+      if(post.image){
+        return `<div class="thumb"><img src="${escapeHtml(post.image)}" alt="${escapeHtml(post.title)}"></div>`;
+      }
+      return `<div class="thumb"><div class="thumb-placeholder">— Dispatch No. ${escapeHtml(post.id || '')} —</div></div>`;
+    }
+    function renderCard(post, idx){
+      const typeBadge = post.type === 'video'
+        ? '<span class="type-badge video">Video</span>'
+        : '<span class="type-badge">Bulletin</span>';
+      return `
+        <article class="post-card" onclick="openPost(${idx})" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPost(${idx})}">
+          ${renderThumb(post)}
+          <div class="post-meta-row">
+            <span>${escapeHtml(post.date || '')}</span>
+            ${typeBadge}
+          </div>
+          <h3>${escapeHtml(post.title)}</h3>
+          <p class="excerpt">${escapeHtml(post.excerpt || '')}</p>
+          <div class="read-more">Read more →</div>
+        </article>
+      `;
+    }
+    function openPost(idx){
+      const post = postsCache[idx];
+      if(!post) return;
+      const hero = document.getElementById('post-hero');
+      if(post.type === 'video' && post.youtube_id){
+        hero.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${escapeHtml(post.youtube_id)}?rel=0" title="${escapeHtml(post.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      } else if(post.image){
+        hero.innerHTML = `<img src="${escapeHtml(post.image)}" alt="${escapeHtml(post.title)}">`;
+      } else {
+        hero.innerHTML = '';
+      }
+      document.getElementById('post-meta').textContent = `${post.date || ''} · ${post.type === 'video' ? 'Video' : 'Bulletin'}`;
+      document.getElementById('post-title').textContent = post.title;
+      // body supports basic html paragraphs from posts.json
+      document.getElementById('post-body').innerHTML = post.body || '';
+      document.getElementById('post-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePost(){
+      document.getElementById('post-overlay').classList.remove('active');
+      document.getElementById('post-hero').innerHTML = '';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape') closePost();
+    });
+    // Fetch and render posts
+    fetch('/posts.json?v=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        postsCache = (data.posts || []).slice().sort((a, b) => (b.date_iso || '').localeCompare(a.date_iso || ''));
+        const grid = document.getElementById('news-grid');
+        if(postsCache.length === 0){
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px"><p style="font-family:Playfair Display, serif;font-style:italic;color:#2a241d">No dispatches yet. Check back soon.</p></div>';
+          return;
+        }
+        grid.innerHTML = postsCache.map((p, i) => renderCard(p, i)).join('');
+      })
+      .catch(err => {
+        document.getElementById('news-grid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px"><p style="font-family:Playfair Display, serif;font-style:italic;color:#8a1d17">Could not load dispatches. Please try again later.</p></div>';
+        console.error(err);
+      });
+  </script>
+
+  <!-- ===== COLOPHON ===== -->
+  <footer class="colophon">
+    <div class="l">
+      General Offices · <em>400 West Madison St., Chicago</em><br>
+      R. D. Palmer, President
+    </div>
+    <div class="c">
+      <div class="mini"><img src="/cwn_logo.png" alt=""></div>
+      Printed in U.S.A.
+    </div>
+    <div class="r">
+      <em>The Fast Mail Route</em><br>
+      <a href="https://www.instagram.com/bunkerrailroad/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent">@bunkerrailroad</a> · Form 103
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

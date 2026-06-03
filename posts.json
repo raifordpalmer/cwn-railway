@@ -15,9 +15,9 @@
       "date": "May 1955",
       "date_iso": "1955-05-10",
       "type": "video",
-      "youtube_id": "",
-      "title": "Sample Video Post (Placeholder)",
-      "excerpt": "When you add a video post, fill in the youtube_id field with the ID from a YouTube URL (the part after v=).",
+      "youtube_id": "v=qgQUcdthDFg",
+      "title": "Three Rail O Scale 3rd Rail ATSF Northern fires up!",
+      "excerpt": "Sunset 3rd Rail Santa Fe Northern Startup - Proviso Yards.",
       "body": "<p>This is a placeholder for a video post. To make it work, edit <code>posts.json</code> and replace the empty <code>youtube_id</code> with the video ID from a YouTube URL.</p><p>For example, if the YouTube URL is <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code>, the youtube_id would be <code>dQw4w9WgXcQ</code>.</p><p>The thumbnail will load automatically from YouTube, and the video will play embedded in the dispatch when a visitor clicks through.</p>"
     }
   ]
